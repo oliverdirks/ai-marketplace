@@ -145,7 +145,8 @@ Zentral verteilen: Dieselbe `config-examples/managed-settings.json` funktioniert
 `managed-settings.json`. Pfade: `/etc/claude-code/` unter Linux,
 `/Library/Application Support/ClaudeCode/` unter macOS, `C:\Program Files\ClaudeCode\` unter Windows.
 Pro Repo: [`config-examples/consumer-repo/.claude/settings.json`](config-examples/consumer-repo/.claude/settings.json).
-Die Copilot CLI liest diese Datei ebenfalls.
+Claude Code übernimmt den Marketplace daraus erst, wenn der Ordner im Trust-Dialog als vertrauenswürdig
+bestätigt wurde. Die Copilot CLI liest diese Datei ebenfalls.
 
 ### OpenCode und weitere Skill-Clients
 
