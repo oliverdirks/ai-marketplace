@@ -1,0 +1,37 @@
+{
+  "marketplace": {
+    "name": "acme-ai",
+    "description": "Interner Marketplace für KI-Plugins, Skills und MCP-Konfigurationen",
+    "git_url": "https://acme.ghe.com/acme-ai/ai-marketplace.git"
+  },
+  "plugins": [
+    {
+      "name": "engineering-standards",
+      "kind": "local",
+      "description": "Hausweite Engineering-Konventionen: Commit-Messages und Pull-Request-Beschreibungen",
+      "version": "1.0.0",
+      "path": "plugins/engineering-standards",
+      "repository": "https://acme.ghe.com/acme-ai/ai-marketplace",
+      "skills": [
+        {
+          "name": "conventional-commits",
+          "description": "Formuliert Commit-Messages nach der hausweiten Conventional-Commits-Konvention. Verwenden, wenn ein Commit erstellt oder eine Commit-Message vorgeschlagen werden soll."
+        },
+        {
+          "name": "pull-request-description",
+          "description": "Erstellt Pull-Request-Beschreibungen nach der hausweiten Vorlage (Kontext, Änderungen, Tests, Risiken). Verwenden, wenn ein Pull Request erstellt oder beschrieben werden soll."
+        }
+      ],
+      "components": [
+        "skills"
+      ],
+      "category": "conventions",
+      "team": "Platform Engineering",
+      "keywords": [
+        "conventions",
+        "git",
+        "pull-requests"
+      ]
+    }
+  ]
+}

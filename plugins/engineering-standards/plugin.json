@@ -1,0 +1,11 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "engineering-standards",
+  "description": "Hausweite Engineering-Konventionen: Commit-Messages und Pull-Request-Beschreibungen",
+  "version": "1.0.0",
+  "author": {
+    "name": "Platform Engineering"
+  },
+  "license": "UNLICENSED",
+  "keywords": ["conventions", "git", "pull-requests"]
+}

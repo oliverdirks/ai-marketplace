@@ -1,0 +1,10 @@
+{
+  "name": "example-plugin",
+  "description": "Kurzbeschreibung: Was kann das Plugin, für wen ist es gedacht?",
+  "version": "0.1.0",
+  "author": {
+    "name": "Team-Name"
+  },
+  "license": "UNLICENSED",
+  "keywords": ["example"]
+}

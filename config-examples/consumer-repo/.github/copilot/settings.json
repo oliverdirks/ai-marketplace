@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "acme-ai": {
+      "source": {
+        "source": "git",
+        "url": "https://acme.ghe.com/acme-ai/ai-marketplace.git"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "engineering-standards@acme-ai": true
+  }
+}

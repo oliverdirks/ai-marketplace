@@ -1,0 +1,23 @@
+# Zentrale Konfiguration des internen AI-Marketplace.
+# Die Plugins selbst werden in registry/*.toml registriert (eine Datei pro Plugin).
+# Generierte Dateien NICHT von Hand editieren – stattdessen:
+#   python3 scripts/build_marketplace.py
+
+[marketplace]
+# Wird in allen Clients als Marketplace-Name angezeigt (Plugins installiert man als <plugin>@<name>).
+name = "acme-ai"
+description = "Interner Marketplace für KI-Plugins, Skills und MCP-Konfigurationen"
+version = "1.0.0"
+owner = { name = "Platform Engineering", email = "ai-platform@acme.example" }
+
+[github]
+# Hostname der GHE.com-Instanz mit Data Residency (ohne https://).
+host = "acme.ghe.com"
+# Repository dieses Marketplaces (org/repo) – wird für Links und Installationsbefehle verwendet.
+repository = "acme-ai/ai-marketplace"
+
+[discovery]
+# Organisationen, die bei --online nach Plugin-Repos durchsucht werden.
+orgs = ["acme-ai"]
+# Repos mit diesem Topic gelten als Plugin-Repos und werden automatisch als Registry-Eintrag vorgeschlagen.
+topic = "ai-plugin"

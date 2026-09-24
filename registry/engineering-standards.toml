@@ -1,0 +1,5 @@
+# Zentral gepflegtes Plugin: liegt in plugins/engineering-standards in diesem Repo.
+# Beschreibung und Version kommen aus dem plugin.json des Plugins.
+name = "engineering-standards"
+category = "conventions"
+team = "Platform Engineering"

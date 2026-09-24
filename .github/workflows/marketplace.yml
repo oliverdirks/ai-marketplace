@@ -1,0 +1,82 @@
+name: Marketplace
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 5 * * 1-5" # werktags: neue Plugin-Repos finden, Metadaten aktualisieren
+  workflow_dispatch:
+  repository_dispatch:
+    types: [plugin-released] # Plugin-Repos können nach einem Release einen Refresh auslösen
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    if: github.event_name == 'pull_request' || github.event_name == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Tests
+        run: python3 -m unittest discover -s tests
+      - name: Plugins validieren und generierte Dateien prüfen
+        run: python3 scripts/build_marketplace.py --check
+
+  refresh:
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch' || github.event_name == 'repository_dispatch'
+    runs-on: ubuntu-latest
+    concurrency: marketplace-refresh
+    steps:
+      # GITHUB_TOKEN sieht nur dieses Repo. Für Discovery und Metadaten der Plugin-Repos braucht es eine
+      # GitHub App (Contents: read + Metadata: read auf den Plugin-Repos; Contents/Pull requests: write hier).
+      - name: Token der GitHub App erzeugen
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.MARKETPLACE_APP_ID }}
+          private-key: ${{ secrets.MARKETPLACE_APP_PRIVATE_KEY }}
+          owner: ${{ github.repository_owner }}
+      # Weitere Organisationen: App dort installieren, je Org einen Token erzeugen und unten als
+      # GH_TOKEN__<ORG> übergeben (Org-Name in Großbuchstaben, Sonderzeichen als _), z. B.:
+      # - name: Token für acme-data
+      #   id: token-acme-data
+      #   uses: actions/create-github-app-token@v2
+      #   with:
+      #     app-id: ${{ vars.MARKETPLACE_APP_ID }}
+      #     private-key: ${{ secrets.MARKETPLACE_APP_PRIVATE_KEY }}
+      #     owner: acme-data
+
+      - uses: actions/checkout@v5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Discovery und Metadaten aktualisieren
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          # GH_TOKEN__ACME_DATA: ${{ steps.token-acme-data.outputs.token }}
+        run: python3 scripts/build_marketplace.py --online
+
+      - name: Änderungen als Pull Request vorschlagen
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token }}
+          BASE_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Keine Änderungen."
+            exit 0
+          fi
+          export GH_HOST="${GITHUB_SERVER_URL#https://}"
+          branch="bot/marketplace-refresh"
+          git config user.name "ai-marketplace-bot"
+          git config user.email "ai-marketplace-bot@users.noreply.${GH_HOST}"
+          git switch -C "$branch"
+          git add -A
+          git commit -m "Marketplace-Katalog aktualisieren"
+          git push --force origin "$branch"
+          if [ "$(gh pr list --head "$branch" --state open --json number --jq length)" = "0" ]; then
+            gh pr create --base "$BASE_BRANCH" --head "$branch" \
+              --title "Marketplace-Katalog aktualisieren" \
+              --body "Automatisch erzeugt: neu gefundene Plugin-Repos (Topic-Discovery) und aktualisierte Metadaten. Neue Einträge in registry/ bitte prüfen (Kategorie, Team, Ref) und dann mergen."
+          fi

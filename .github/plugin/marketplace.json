@@ -1,0 +1,25 @@
+{
+  "name": "acme-ai",
+  "owner": {
+    "name": "Platform Engineering",
+    "email": "ai-platform@acme.example"
+  },
+  "metadata": {
+    "description": "Interner Marketplace für KI-Plugins, Skills und MCP-Konfigurationen",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "engineering-standards",
+      "source": "./plugins/engineering-standards",
+      "description": "Hausweite Engineering-Konventionen: Commit-Messages und Pull-Request-Beschreibungen",
+      "version": "1.0.0",
+      "category": "conventions",
+      "keywords": [
+        "conventions",
+        "git",
+        "pull-requests"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "extraKnownMarketplaces": {
+    "acme-ai": {
+      "source": {
+        "source": "git",
+        "url": "https://acme.ghe.com/acme-ai/ai-marketplace.git"
+      },
+      "autoUpdate": true
+    }
+  },
+  "strictKnownMarketplaces": [
+    {
+      "source": "hostPattern",
+      "hostPattern": "^acme\\.ghe\\.com$"
+    }
+  ],
+  "enabledPlugins": {
+    "engineering-standards@acme-ai": true
+  }
+}
