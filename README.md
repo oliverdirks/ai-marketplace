@@ -13,6 +13,9 @@ können zentral hier oder **verteilt in den Repos der Teams** liegen.
 Die Übersicht aller Plugins steht in [`catalog/CATALOG.md`](catalog/CATALOG.md), maschinenlesbar in
 [`catalog/catalog.json`](catalog/catalog.json).
 
+Wie dieser Marketplace in eine Software Factory mit Cloud Agents, Teams-Anbindung und CI/CD-Gates eingebettet wird,
+beschreibt der [Fahrplan Software Factory](docs/software-factory-roadmap.md).
+
 ## Architektur
 
 ```text
